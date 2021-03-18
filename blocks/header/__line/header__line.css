@@ -7,7 +7,7 @@
 
 @media screen and (max-width: 639px) {
     .header__line{
-        width: calc(100% + 27px*2);
-        margin-left: -27px;
+        width: calc(100% + 25px*2);
+        margin-left: -26px;
     }
 }

@@ -8,3 +8,15 @@
     border: white 1px solid;
     outline: none; 
 }
+
+.profile__edit-button:hover{
+    cursor: pointer;
+    opacity: 0.6;
+}
+
+@media screen and (max-width: 639px) {
+    .profile__edit-button{
+        height: 18px;
+        width: 18px;
+    }
+}

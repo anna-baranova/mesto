@@ -9,3 +9,13 @@
     text-overflow: ellipsis;
 
 }
+
+@media screen and (max-width: 879px) {
+    .profile__info-subtitle{
+        display: flex;
+        justify-content: center;
+        font-size: 14px;
+        line-height: 1.21;
+        text-align: center;   
+    }
+}

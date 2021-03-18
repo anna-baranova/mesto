@@ -8,10 +8,3 @@
     overflow: hidden;
     text-overflow: ellipsis;
 }
-
-@media screen and (max-width: 639px) {
-    .profile__info-title{
-        font-size: 27px;
-        line-height: 1.22; 
-    }
-}

@@ -5,3 +5,11 @@
     justify-content: start;
     margin: 40px auto 0 auto; 
 }
+
+@media screen and (max-width: 879px) {
+    .profile{
+        flex-direction: column;
+        width: calc(100% - 19px*2);
+        
+    }
+}

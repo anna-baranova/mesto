@@ -14,3 +14,11 @@
     flex-direction: column;
     justify-content: space-between;
 }
+
+@media screen and (max-width: 879px) {
+    .form{
+        min-width: 282px;
+        min-height: 322px;
+        padding: 25px 22px;
+    }
+}

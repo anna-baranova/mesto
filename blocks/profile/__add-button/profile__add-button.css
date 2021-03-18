@@ -11,3 +11,20 @@
     background-position: center;
     outline: none;
 }
+
+.profile__add-button:hover{
+    cursor: pointer;
+    opacity: 0.6;
+}
+
+@media screen and (max-width: 879px) {
+    .profile__add-button{
+        margin-left: 0;
+    }
+}
+
+@media screen and (max-width: 639px) {
+    .profile__add-button{
+        width: 100%;
+    }
+}

@@ -5,3 +5,10 @@
     overflow: hidden;
     margin-right: 30px;
 }
+
+@media screen and (max-width: 879px) {
+    .profile__image-wrapper{
+        margin-right: 0;
+        
+    }
+}

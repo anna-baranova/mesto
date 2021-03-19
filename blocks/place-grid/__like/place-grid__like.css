@@ -1,12 +1,12 @@
 .place-grid__like{
+    background: none;
     background-image: url(../../../images/place-grid__like.svg);
     background-position: center;
     width: 22px;
     height: 19px;
-    margin-left: 28px;
-    margin-right: 5px;
     border: none;
     outline: none;
+    padding: 0;
 }
 
 .place-grid__like:hover{
@@ -15,6 +15,6 @@
 }
 
 .place-grid__like:focus{
-    background-image: url(../../../images/place-grid__like_active.png);
+    background-image: url(../../../images/place-grid__like_active.svg);
     cursor: pointer;
 }

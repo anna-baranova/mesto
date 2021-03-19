@@ -1,6 +1,21 @@
 .profile__image{
-    max-width: 168.75px;
-    max-height: 127.5px;
+    max-width: 120px;
+    max-height: 120px;
     object-fit: cover;
     object-position: center;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 30px;
+}
+
+@media screen and (max-width: 879px) {
+    .profile__image{
+        margin-right: 0;
+    }
+}
+
+@media screen and (max-width: 639px) {
+    .profile__image{
+        justify-self: center;
+    }
 }

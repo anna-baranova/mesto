@@ -1,10 +1,9 @@
 .place-grid__title-container{
-    max-width: 246px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
     align-items: center;
     margin: 25px 15px 31px 21px;
+    display: grid;
+    grid-template-columns: 1fr 22px;
+    gap: 30px;
 }
 
 @media screen and (max-width: 639px) {

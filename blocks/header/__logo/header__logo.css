@@ -1,5 +1,5 @@
 .header__logo{
-    background-image: url(../../../images/header__logo.png);
+    background-image: url(../../../images/header__logo.svg);
     width: 142px;
     height: 33px;
     background-repeat: no-repeat;
@@ -19,5 +19,6 @@
         width: 104px;
         height: 24px;
         background-size: contain;
+        margin: 28px 0 32px 27px;
     }
 }

@@ -1,4 +1,5 @@
 .profile__info{
+    max-width: 550px;
     display: grid;
     grid-template-columns: repeat(2 ,auto);
     gap: 6px 18px;

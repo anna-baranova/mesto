@@ -14,7 +14,3 @@
     cursor: pointer;
 }
 
-.place-grid__like:focus{
-    background-image: url(../../../images/place-grid__like_active.svg);
-    cursor: pointer;
-}

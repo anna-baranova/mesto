@@ -33,7 +33,7 @@ const nameProfile = document.querySelector('.profile__info-title');
 const jobProfile = document.querySelector('.profile__info-subtitle');
 
 const photoCards = document.querySelector('.place-grid__list');
-const ListItemTemplate = document.querySelector('.place-grid-template').content.querySelector('.place-grid__list-item');
+const listItemTemplate = document.querySelector('.place-grid-template').content.querySelector('.place-grid__list-item');
 const addCardForm = document.querySelector('.form_type_add-card');
 const addCardTitleInput = addCardForm.querySelector('.form__input_type_place');
 const addCardImgInput = addCardForm.querySelector('.form__input_type_link');
@@ -60,14 +60,15 @@ function changeData (event) {
 };
 
 function createCard (str) {
-  const listItem = ListItemTemplate.cloneNode(true);
+  const listItem = listItemTemplate.cloneNode(true);
   const listItemTitle = listItem.querySelector('.place-grid__title');
   const listItemPhoto = listItem.querySelector('.place-grid__item');
   listItemTitle.textContent = str.name;
   listItemPhoto.src = str.link;
+  listItemPhoto.alt = str.name;
 
   const delButton = listItem.querySelector('.place-grid__delete');
-  delButton.addEventListener('click', e =>  listItem.remove());
+  delButton.addEventListener('click', () =>  listItem.remove());
   const likeButton = listItem.querySelector('.place-grid__like');
   likeButton.addEventListener('click', () => {
   likeButton.classList.toggle('place-grid__like-liked')
@@ -77,12 +78,19 @@ function createCard (str) {
 
   listItemPhoto.addEventListener('click', function(){
     zoomPhoto.src = str.link;
+    zoomPhoto.alt = str.name;
     zoomPhotoCaption.textContent = str.name;
     togglePopup(zoomCardPopup);
   })
-  
-  photoCards.prepend(listItem);
+
+  return listItem;
 };
+
+function addCard (data) {
+  photoCards.prepend(createCard(data));
+}
+
+initialCards.forEach (addCard);
 
 function togglePopup (popup) {
   popup.classList.toggle('popup_visible');
@@ -92,11 +100,10 @@ const addCardFormSubmitHandler = e => {
     e.preventDefault();
     const inputTitleValue = addCardTitleInput.value;
     const inputImgValue = addCardImgInput.value; 
-    createCard ({name: inputTitleValue, link: inputImgValue});
+    addCard({name: inputTitleValue, link: inputImgValue});
     togglePopup(addCardPopup);
 };
 
-initialCards.forEach(createCard);
 addCardForm.addEventListener('submit', addCardFormSubmitHandler);
 formElement.addEventListener('submit', changeData);
 openEditPopupBtn.addEventListener('click', () => togglePopup(editPopup));

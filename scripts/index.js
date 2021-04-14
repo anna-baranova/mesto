@@ -25,7 +25,6 @@ const initialCards = [
   }
 ]; 
 
-
 const formElement = document.querySelector('.form_type_edit');
 const nameInput = document.querySelector('.form__input_type_name');
 const jobInput = document.querySelector('.form__input_type_job');
@@ -41,6 +40,10 @@ const addCardImgInput = addCardForm.querySelector('.form__input_type_link');
 const editPopup = document.querySelector('.popup_type_edit');
 const addCardPopup = document.querySelector('.popup_type_add-card');
 const zoomCardPopup = document.querySelector('.popup_type_zoom-card');
+
+const editPopupOverlay = editPopup.querySelector('.popup__overlay');
+const addCardOverlay = addCardPopup.querySelector('.popup__overlay');
+const zoomCardPopupOverlay = zoomCardPopup.querySelector('.popup__overlay');
 
 const openEditPopupBtn = document.querySelector('.profile__edit-button');
 const openAddCardPopupBtn = document.querySelector('.profile__add-button');
@@ -96,6 +99,19 @@ function togglePopup (popup) {
   popup.classList.toggle('popup_visible');
 };
 
+function closePopup (popup) {
+  popup.classList.remove('popup_visible');
+}
+
+function closeByEscape (event) {
+  if (event.key === "Escape") {
+    const openedPupup = document.querySelector('.popup_visible');
+    closePopup(openedPupup);
+  }
+}
+
+document.addEventListener('keydown', closeByEscape);
+
 const addCardFormSubmitHandler = e => {
     e.preventDefault();
     const inputTitleValue = addCardTitleInput.value;
@@ -106,8 +122,13 @@ const addCardFormSubmitHandler = e => {
 
 addCardForm.addEventListener('submit', addCardFormSubmitHandler);
 formElement.addEventListener('submit', changeData);
+
 openEditPopupBtn.addEventListener('click', () => togglePopup(editPopup));
 openAddCardPopupBtn.addEventListener('click', () => togglePopup(addCardPopup));
 closeEditPopupBtn.addEventListener('click', () => togglePopup(editPopup));
 closeAddCardPopupBtn.addEventListener('click', () => togglePopup(addCardPopup));
 closeZoomCardPopupBtn.addEventListener('click', () => togglePopup(zoomCardPopup));
+
+editPopupOverlay.addEventListener('click', () => closePopup(editPopup));
+addCardOverlay.addEventListener('click', () => closePopup(addCardPopup));
+zoomCardPopupOverlay.addEventListener('click', () => closePopup(zoomCardPopup));

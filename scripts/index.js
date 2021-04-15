@@ -59,7 +59,7 @@ function changeData (event) {
     event.preventDefault();
     nameProfile.textContent = nameInput.value;
     jobProfile.textContent = jobInput.value;
-    togglePopup(editPopup);
+    closePopup(editPopup);
 };
 
 function createCard (str) {
@@ -83,7 +83,8 @@ function createCard (str) {
     zoomPhoto.src = str.link;
     zoomPhoto.alt = str.name;
     zoomPhotoCaption.textContent = str.name;
-    togglePopup(zoomCardPopup);
+    openPopup(zoomCardPopup);
+    // togglePopup(zoomCardPopup);
   })
 
   return listItem;
@@ -95,13 +96,19 @@ function addCard (data) {
 
 initialCards.forEach (addCard);
 
-function togglePopup (popup) {
-  popup.classList.toggle('popup_visible');
+function openPopup (popup) {
+  popup.classList.add('popup_visible');
+  document.addEventListener('keydown', closeByEscape);
 };
 
 function closePopup (popup) {
   popup.classList.remove('popup_visible');
-}
+  document.removeEventListener('keydown', closeByEscape);
+};
+
+// function togglePopup (popup) {
+//   popup.classList.toggle('popup_visible');
+// };
 
 function closeByEscape (event) {
   if (event.key === "Escape") {
@@ -110,24 +117,25 @@ function closeByEscape (event) {
   }
 }
 
-document.addEventListener('keydown', closeByEscape);
+// document.addEventListener('keydown', closeByEscape);
 
 const addCardFormSubmitHandler = e => {
     e.preventDefault();
     const inputTitleValue = addCardTitleInput.value;
     const inputImgValue = addCardImgInput.value; 
     addCard({name: inputTitleValue, link: inputImgValue});
-    togglePopup(addCardPopup);
+    closelePopup(addCardPopup)
+    // togglePopup(addCardPopup);
 };
 
 addCardForm.addEventListener('submit', addCardFormSubmitHandler);
 formElement.addEventListener('submit', changeData);
 
-openEditPopupBtn.addEventListener('click', () => togglePopup(editPopup));
-openAddCardPopupBtn.addEventListener('click', () => togglePopup(addCardPopup));
-closeEditPopupBtn.addEventListener('click', () => togglePopup(editPopup));
-closeAddCardPopupBtn.addEventListener('click', () => togglePopup(addCardPopup));
-closeZoomCardPopupBtn.addEventListener('click', () => togglePopup(zoomCardPopup));
+openEditPopupBtn.addEventListener('click', () => openPopup(editPopup));
+openAddCardPopupBtn.addEventListener('click', () => openPopup(addCardPopup));
+closeEditPopupBtn.addEventListener('click', () => closePopup(editPopup));
+closeAddCardPopupBtn.addEventListener('click', () => closePopup(addCardPopup));
+closeZoomCardPopupBtn.addEventListener('click', () => closePopup(zoomCardPopup));
 
 editPopupOverlay.addEventListener('click', () => closePopup(editPopup));
 addCardOverlay.addEventListener('click', () => closePopup(addCardPopup));

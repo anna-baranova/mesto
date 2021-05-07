@@ -18,9 +18,9 @@ class Card {
     }
 
     _handleZoomPhoto() {
-        zoomPhoto.src = str.link;
-        zoomPhoto.alt = str.name;
-        zoomPhotoCaption.textContent = str.name;
+        zoomPhoto.src = this._link;
+        zoomPhoto.alt = this._text;
+        zoomPhotoCaption.textContent = this._text;
         openPopup(zoomCardPopup);
     }
 
@@ -29,9 +29,9 @@ class Card {
         const delButton = this._listItem.querySelector('.place-grid__delete');
         const listItemPhoto = this._listItem.querySelector('.place-grid__item');
 
-        delButton.addEventListener('click', this._handleDeleteCard);
+        delButton.addEventListener('click', () => this._handleDeleteCard());
         likeButton.addEventListener('click', this._handleLikeButton);
-        listItemPhoto.addEventListener('click', () => this._handleZoomPhoto(str));
+        listItemPhoto.addEventListener('click', () => this._handleZoomPhoto());
     }
 
     getCard() {
@@ -43,6 +43,7 @@ class Card {
         listItemTitle.textContent = this._text;
         listItemPhoto.src = this._link;
         listItemPhoto.alt = this._text;
+        this._setEventListeners();
 
         return this._listItem;
     }

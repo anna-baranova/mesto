@@ -1,6 +1,6 @@
 import FormValidator from './FormValidator.js';
 import Card from './Card.js';
-import {closePopup, closeByEscape, openPopup, zoomCardPopup, zoomPhoto, zoomPhotoCaption} from './utils.js';
+import {closePopup, openPopup, zoomCardPopup} from './utils.js';
 
 //селекторы для валидации
 const config = {  
@@ -66,10 +66,6 @@ const addCardImgInput = addCardForm.querySelector('.form__input_type_link');
 const editPopup = document.querySelector('.popup_type_edit');
 const addCardPopup = document.querySelector('.popup_type_add-card');
 
-//перенесли в utils.js
-//const zoomCardPopup = document.querySelector('.popup_type_zoom-card');
-// const zoomPhoto = zoomCardPopup.querySelector('.popup__image');
-// const zoomPhotoCaption = zoomCardPopup.querySelector('.popup__caption');
 
 //оверлеи
 const editPopupOverlay = editPopup.querySelector('.popup__overlay');
@@ -85,88 +81,55 @@ const closeEditPopupBtn = editPopup.querySelector('.popup__close-btn');
 const closeAddCardPopupBtn = addCardPopup.querySelector('.popup__close-btn');
 const closeZoomCardPopupBtn = zoomCardPopup.querySelector('.popup__close-btn');
 
+//кнопка сохранения формы добавления карточки
+
+const addCardFormSubmitButton = addCardForm.querySelector('.form__save-btn')
+
+
+function reset(form){
+  form.reset();
+}
 
 function changeData (event) {
     event.preventDefault();
     nameProfile.textContent = nameInput.value;
     jobProfile.textContent = jobInput.value;
     closePopup(editPopup);
+ 
 };
 
 
-//перенесли в Card.js
-// const handleDeleteCard = (evt) => {
-//   evt.target.closest('.place-grid__list-item').remove();
-// };
+function openEditPopup() {
+  openPopup(editPopup);
+  nameInput.value = nameProfile.textContent; 
+  jobInput.value = jobProfile.textContent;
+}
 
-// const handleLikeButton = (evt) => {
-//   evt.target.classList.toggle('place-grid__like-liked')
-// };
-
-// const handleZoomPhoto = (str) => {
-//   zoomPhoto.src = str.link;
-//   zoomPhoto.alt = str.name;
-//   zoomPhotoCaption.textContent = str.name;
-//   openPopup(zoomCardPopup);
-// }
-
-
-
-// function createCard (str) {
-//   const listItem = listItemTemplate.cloneNode(true);
-//   const listItemTitle = listItem.querySelector('.place-grid__title');
-//   const listItemPhoto = listItem.querySelector('.place-grid__item');
-//   listItemTitle.textContent = str.name;
-//   listItemPhoto.src = str.link;
-//   listItemPhoto.alt = str.name;
-
-//   const delButton = listItem.querySelector('.place-grid__delete');
-//   const likeButton = listItem.querySelector('.place-grid__like');
-
-//   delButton.addEventListener('click', handleDeleteCard);
-//   likeButton.addEventListener('click', handleLikeButton);
-//   listItemPhoto.addEventListener('click', () => handleZoomPhoto(str));
-
-//   return listItem;
-// };
+function createCard (data) {
+  const card = new Card (data, '.place-grid-template');
+  return card.getCard();
+};
 
 function addCard (data) {
-  const card = new Card (data, '.place-grid-template');
-  photoCards.prepend(card.getCard());
-};
+  photoCards.prepend(createCard(data));
+}
 
 initialCards.forEach (addCard);
 
-//перенесли в utils.js
-// function openPopup (popup) {
-//   popup.classList.add('popup_visible');
-//   document.addEventListener('keydown', closeByEscape);
-// };
-
-// function closePopup (popup) {
-//   popup.classList.remove('popup_visible');
-//   document.removeEventListener('keydown', closeByEscape);
-// };
-
-// function closeByEscape (event) {
-//   if (event.key === "Escape") {
-//     const openedPupup = document.querySelector('.popup_visible');
-//     closePopup(openedPupup);
-//   }
-// };
-
-const addCardFormSubmitHandler = e => {
-    e.preventDefault();
+const addCardFormSubmitHandler = event => {
+    event.preventDefault();
     const inputTitleValue = addCardTitleInput.value;
     const inputImgValue = addCardImgInput.value; 
     addCard({text: inputTitleValue, link: inputImgValue});
-    closePopup(addCardPopup)
+    closePopup(addCardPopup);
+    reset(addCardForm);
+    addCardValidator.deactivateButton(addCardFormSubmitButton, config.inactiveButtonClass);
 };
 
 addCardForm.addEventListener('submit', addCardFormSubmitHandler);
 editProfileForm.addEventListener('submit', changeData);
 
-openEditPopupBtn.addEventListener('click', () => openPopup(editPopup));
+openEditPopupBtn.addEventListener('click', () => openEditPopup(editPopup));
 openAddCardPopupBtn.addEventListener('click', () => openPopup(addCardPopup));
 closeEditPopupBtn.addEventListener('click', () => closePopup(editPopup));
 closeAddCardPopupBtn.addEventListener('click', () => closePopup(addCardPopup));

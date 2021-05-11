@@ -61,6 +61,11 @@ class FormValidator {
         })
     }
 
+    deactivateButton(buttonElement, inactiveButtonClass) {
+        buttonElement.setAttribute('disabled', true);
+        buttonElement.classList.add(inactiveButtonClass);
+    };
+
     enableValidation() {
         this._setEventListeners();
     }

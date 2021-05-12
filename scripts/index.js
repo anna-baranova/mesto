@@ -123,7 +123,7 @@ const addCardFormSubmitHandler = event => {
     addCard({text: inputTitleValue, link: inputImgValue});
     closePopup(addCardPopup);
     reset(addCardForm);
-    addCardValidator.deactivateButton(addCardFormSubmitButton, config.inactiveButtonClass);
+    addCardValidator.deactivateButton();
 };
 
 addCardForm.addEventListener('submit', addCardFormSubmitHandler);

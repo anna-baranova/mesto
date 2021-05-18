@@ -1,20 +1,48 @@
-export function closePopup (popup) {
-    popup.classList.remove('popup_visible');
-    document.removeEventListener('keydown', closeByEscape);
-  };
+//формы добавления карточки и редактирования профиля
+export const addCardForm = document.querySelector('.form_type_add-card');
+export const editProfileForm = document.querySelector('.form_type_edit');
 
-export function closeByEscape (event) {
-    if (event.key === "Escape") {
-      const openedPupup = document.querySelector('.popup_visible');
-      closePopup(openedPupup);
-    }
-  };
+//кнопки открытия
+export const openEditPopupBtn = document.querySelector('.profile__edit-button');
+export const openAddCardPopupBtn = document.querySelector('.profile__add-button');
 
-export function openPopup (popup) {
-    popup.classList.add('popup_visible');
-    document.addEventListener('keydown', closeByEscape);
-  };  
+//инпуты формы редактирования
+export const nameInput = document.querySelector('.form__input_type_name');
+export const jobInput = document.querySelector('.form__input_type_job');
 
-export const zoomCardPopup = document.querySelector('.popup_type_zoom-card');
-export const zoomPhoto = zoomCardPopup.querySelector('.popup__image');
-export const zoomPhotoCaption = zoomCardPopup.querySelector('.popup__caption');
+export const initialCards = [
+  {
+    text: 'Архыз',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
+  },
+  {
+    text: 'Челябинская область',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
+  },
+  {
+    text: 'Иваново',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
+  },
+  {
+    text: 'Камчатка',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
+  },
+  {
+    text: 'Холмогорский район',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
+  },
+  {
+    text: 'Байкал',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
+  }
+];
+
+//селекторы для валидации
+export const config = {  
+  formSelector: '.form',
+  inputSelector: '.form__input',
+  submitButtonSelector: '.form__save-btn',
+  inactiveButtonClass: 'form__save-btn_disabled',
+  inputErrorClass: 'form__input_type_error',
+  errorClass: 'form__input-error_visible'
+}

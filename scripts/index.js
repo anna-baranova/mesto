@@ -1,20 +1,28 @@
 import FormValidator from './FormValidator.js';
 import Card from './Card.js';
-import {closePopup, openPopup, zoomCardPopup} from './utils.js';
+import Section from './Section.js';
+import PopupWithImage from './PopupWithImage.js';
+import PopupWithForm from './PopupWithForm.js';
+import UserInfo from './UserInfo.js';
+import {addCardForm, editProfileForm, openEditPopupBtn, openAddCardPopupBtn, nameInput, jobInput, initialCards, config} from './utils.js'
 
-//селекторы для валидации
-const config = {  
-  formSelector: '.form',
-  inputSelector: '.form__input',
-  submitButtonSelector: '.form__save-btn',
-  inactiveButtonClass: 'form__save-btn_disabled',
-  inputErrorClass: 'form__input_type_error',
-  errorClass: 'form__input-error_visible'
-}
+//открытие фото по клику - 8
+function handleCardClick(text, link) {
+  popupWithImage.open(text, link);
+}  
 
-//формы добавления карточки и редактирования профиля
-const addCardForm = document.querySelector('.form_type_add-card');
-const editProfileForm = document.querySelector('.form_type_edit');
+//экземпляр класса Section - 8
+const cardList = new Section ({
+  items: initialCards,
+  renderer: (data) => {
+    const card = new Card (data, '.place-grid-template', handleCardClick);
+    const cardElement = card.getCard();
+    cardList.addItem(cardElement);
+  }
+}, '.place-grid__list')
+
+//вставляем карточки на страницу - 8
+cardList.renderCards();
 
 //экземпляры валидации
 const addCardValidator = new FormValidator (config, addCardForm);
@@ -24,117 +32,44 @@ const editProfileValidator = new FormValidator (config, editProfileForm);
 addCardValidator.enableValidation();
 editProfileValidator.enableValidation();
 
-const initialCards = [
-  {
-    text: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-  },
-  {
-    text: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-  },
-  {
-    text: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-  },
-  {
-    text: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-  },
-  {
-    text: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-  },
-  {
-    text: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-  }
-]; 
+//экземпляр класса UserInfo - 8
+const userInfo = new UserInfo({userNameSelector: '.profile__info-title', userJobSelector: '.profile__info-subtitle'});
 
-const nameInput = document.querySelector('.form__input_type_name');
-const jobInput = document.querySelector('.form__input_type_job');
-const nameProfile = document.querySelector('.profile__info-title');
-const jobProfile = document.querySelector('.profile__info-subtitle');
-
-const photoCards = document.querySelector('.place-grid__list');
-const listItemTemplate = document.querySelector('.place-grid-template').content.querySelector('.place-grid__list-item');
-
-const addCardTitleInput = addCardForm.querySelector('.form__input_type_place');
-const addCardImgInput = addCardForm.querySelector('.form__input_type_link');
-
-//модалки
-const editPopup = document.querySelector('.popup_type_edit');
-const addCardPopup = document.querySelector('.popup_type_add-card');
-
-
-//оверлеи
-const editPopupOverlay = editPopup.querySelector('.popup__overlay');
-const addCardOverlay = addCardPopup.querySelector('.popup__overlay');
-const zoomCardPopupOverlay = zoomCardPopup.querySelector('.popup__overlay');
-
-//кнопки открытия
-const openEditPopupBtn = document.querySelector('.profile__edit-button');
-const openAddCardPopupBtn = document.querySelector('.profile__add-button');
-
-//кнопки закрытия
-const closeEditPopupBtn = editPopup.querySelector('.popup__close-btn');
-const closeAddCardPopupBtn = addCardPopup.querySelector('.popup__close-btn');
-const closeZoomCardPopupBtn = zoomCardPopup.querySelector('.popup__close-btn');
-
-//кнопка сохранения формы добавления карточки
-
-const addCardFormSubmitButton = addCardForm.querySelector('.form__save-btn')
-
-
-function reset(form){
-  form.reset();
+//меняем данные пользователя на странице - 8
+const editPopupSubmitHandler = (data) => {
+  userInfo.setUserInfo(data['input-name'], data['input-job']);
+  editPopup.close();
 }
 
-function changeData (event) {
-    event.preventDefault();
-    nameProfile.textContent = nameInput.value;
-    jobProfile.textContent = jobInput.value;
-    closePopup(editPopup);
- 
-};
+//экземпляры класса PopupWithForm - 8
+const addCardPopup = new PopupWithForm ('.popup_type_add-card', addCardPopupSubmitHandler);
+const editPopup = new PopupWithForm ('.popup_type_edit', editPopupSubmitHandler);
 
+//добавляем обработчики закрытия и сабмита формам - 8
+addCardPopup.setEventListeners();
+editPopup.setEventListeners();
 
-function openEditPopup() {
-  openPopup(editPopup);
-  nameInput.value = nameProfile.textContent; 
-  jobInput.value = jobProfile.textContent;
+//открытие попапа профиля со значениями со страницы - 8
+openEditPopupBtn.addEventListener('click', () => {
+  editPopup.open(); 
+  const defaultInfo = userInfo.getUserInfo();
+  nameInput.value = defaultInfo.name;
+  jobInput.value = defaultInfo.job;
+});
+
+//отрытие попапа добаления карточки - 8
+openAddCardPopupBtn.addEventListener('click', () => addCardPopup.open());
+
+//создаем экземпляр класса PopupWithImage и подписываемся на клики - 8
+const popupWithImage = new PopupWithImage('.popup_type_zoom-card')
+popupWithImage.setEventListeners();
+
+//обработчик сабмита добавления карточки - 8
+function addCardPopupSubmitHandler(data) {
+  console.log(data)
+  const newData = { text: data['input-place'], link: data['input-link']}
+  const newCard = new Card (newData, '.place-grid-template', handleCardClick);
+  cardList.addItem(newCard.getCard());
+  addCardPopup.close();
+  addCardValidator.deactivateButton();
 }
-
-function createCard (data) {
-  const card = new Card (data, '.place-grid-template');
-  return card.getCard();
-};
-
-function addCard (data) {
-  photoCards.prepend(createCard(data));
-}
-
-initialCards.forEach (addCard);
-
-const addCardFormSubmitHandler = event => {
-    event.preventDefault();
-    const inputTitleValue = addCardTitleInput.value;
-    const inputImgValue = addCardImgInput.value; 
-    addCard({text: inputTitleValue, link: inputImgValue});
-    closePopup(addCardPopup);
-    reset(addCardForm);
-    addCardValidator.deactivateButton();
-};
-
-addCardForm.addEventListener('submit', addCardFormSubmitHandler);
-editProfileForm.addEventListener('submit', changeData);
-
-openEditPopupBtn.addEventListener('click', () => openEditPopup(editPopup));
-openAddCardPopupBtn.addEventListener('click', () => openPopup(addCardPopup));
-closeEditPopupBtn.addEventListener('click', () => closePopup(editPopup));
-closeAddCardPopupBtn.addEventListener('click', () => closePopup(addCardPopup));
-closeZoomCardPopupBtn.addEventListener('click', () => closePopup(zoomCardPopup));
-
-editPopupOverlay.addEventListener('click', () => closePopup(editPopup));
-addCardOverlay.addEventListener('click', () => closePopup(addCardPopup));
-zoomCardPopupOverlay.addEventListener('click', () => closePopup(zoomCardPopup));

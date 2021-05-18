@@ -1,11 +1,9 @@
-import {zoomPhoto, zoomPhotoCaption, openPopup, zoomCardPopup} from './utils.js'
-
-
 class Card {
-    constructor({text, link}, cardTemplateSelector) {
+    constructor({text, link}, cardTemplateSelector, handleCardClick) {
         this._text = text;
         this._link = link;
         this._cardTemplateSelector = cardTemplateSelector;
+        this._handleCardClick = handleCardClick;
     }
 
     _handleDeleteCard () {
@@ -17,13 +15,6 @@ class Card {
         evt.target.classList.toggle('place-grid__like-liked')
     }
 
-    _handleZoomPhoto() {
-        zoomPhoto.src = this._link;
-        zoomPhoto.alt = this._text;
-        zoomPhotoCaption.textContent = this._text;
-        openPopup(zoomCardPopup);
-    }
-
     _setEventListeners() {
         const likeButton = this._listItem.querySelector('.place-grid__like');
         const delButton = this._listItem.querySelector('.place-grid__delete');
@@ -31,7 +22,10 @@ class Card {
 
         delButton.addEventListener('click', () => this._handleDeleteCard());
         likeButton.addEventListener('click', this._handleLikeButton);
-        listItemPhoto.addEventListener('click', () => this._handleZoomPhoto());
+
+        listItemPhoto.addEventListener('click', () => {
+            this._handleCardClick(this._text, this._link)
+          });
     }
 
     getCard() {
@@ -40,9 +34,11 @@ class Card {
         this._listItem = listItemTemplate.cloneNode(true);
         const listItemTitle = this._listItem.querySelector('.place-grid__title');
         const listItemPhoto = this._listItem.querySelector('.place-grid__item');
+
         listItemTitle.textContent = this._text;
         listItemPhoto.src = this._link;
         listItemPhoto.alt = this._text;
+        
         this._setEventListeners();
 
         return this._listItem;

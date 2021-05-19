@@ -4,12 +4,13 @@ import Section from './Section.js';
 import PopupWithImage from './PopupWithImage.js';
 import PopupWithForm from './PopupWithForm.js';
 import UserInfo from './UserInfo.js';
-import {addCardForm, editProfileForm, openEditPopupBtn, openAddCardPopupBtn, nameInput, jobInput, initialCards, config} from './utils.js'
+import {addCardForm, editProfileForm, openEditPopupBtn, openAddCardPopupBtn, nameInput, jobInput, initialCards, config} from './utils.js';
+import './pages/index.css';
 
 //открытие фото по клику - 8
 function handleCardClick(text, link) {
   popupWithImage.open(text, link);
-}  
+}
 
 //экземпляр класса Section - 8
 const cardList = new Section ({

@@ -73,7 +73,6 @@ function addCardPopupSubmitHandler(data) {
   const newCard = new Card (newData, '.place-grid-template', handleCardClick);
   cardList.addItem(newCard.getCard());
   addCardPopup.close();
-  addCardValidator.deactivateButton();
 }
 
 //вставляем карточки на страницу - 8

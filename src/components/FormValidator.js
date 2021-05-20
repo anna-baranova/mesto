@@ -47,17 +47,23 @@ class FormValidator {
     _setEventListeners() {
         this._form.addEventListener('submit', evt => evt.preventDefault());
     
-        const inputList = Array.from(this._form.querySelectorAll(this._config.inputSelector));
+        this._inputList = Array.from(this._form.querySelectorAll(this._config.inputSelector));
         this._buttonElement = this._form.querySelector(this._config.submitButtonSelector)
     
-        this._toggleButtonState(inputList, this._buttonElement);
+        this._toggleButtonState(this._inputList, this._buttonElement);
     
-        inputList.forEach(inputElement => {
+        this._inputList.forEach(inputElement => {
             inputElement.addEventListener('input', (evt) => {
             this._checkInputValidity(inputElement);
-            this._toggleButtonState(inputList);
+            this._toggleButtonState(this._inputList);
             })
         })
+    }
+    //попробуем очистить форму
+    resetValidation() {
+        this._inputList.forEach((inputElement) => {
+          this._hideInputError(inputElement);
+        });
     }
 
     deactivateButton() {

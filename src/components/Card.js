@@ -8,7 +8,7 @@ class Card {
 
     _handleDeleteCard () {
         this._listItem.remove();
-        console.log("123")
+        this._listItem = null;
     }
 
     _handleLikeButton(evt) {

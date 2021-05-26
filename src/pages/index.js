@@ -31,7 +31,7 @@ const avatarFormValidator = new FormValidator(config, avatarForm);
 const editPopupSubmitHandler = (data) => {
   api.changeUserData(data)
     .then(res => {
-      userInfo.setUserInfo(res.name, res.about)
+      userInfo.setUserInfo(res.name, res.about, res.avatar)
       editPopup.close();
     })
     .catch(e => console.log(`Ошибка при получении данных пользователя: ${e}`))
@@ -41,8 +41,8 @@ const editPopupSubmitHandler = (data) => {
 function avatarPopupSubmitHandler(data) {
   api.changeAvatar(data)
     .then((res) => {
-      // console.log('аватар', res)
-      userInfo.setUserInfo(res.avatar)
+      console.log('аватар', res.avatar)
+      userInfo.setUserInfo(res.name, res.about, res.avatar)
       avatarPopup.close();
     })
     .catch(e => console.log(`Ошибка при загрузке аватара: ${e}`))

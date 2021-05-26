@@ -9,7 +9,9 @@ class UserInfo {
         return {
             name: this._userName.textContent,
             job: this._userJob.textContent,
-            avatar: this._userAvatar.src
+            avatar: this._userAvatar.src,
+            
+            
         }
     }
 
@@ -17,7 +19,7 @@ class UserInfo {
         this._userName.textContent = name
         this._userJob.textContent = job
         this._userAvatar.src = avatar
-        // console.log(this._userAvatar)
+        //  console.log(this._userAvatar)
     }
     
 }

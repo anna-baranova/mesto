@@ -58,7 +58,9 @@ class Card {
         
         // this._cardOwnerID = owner._id
         // this._currentUSerId = currentUSerId
-        console.log(this._cardOwnerID === this._currentUSerId)
+        // console.log(this._cardOwnerID === this._currentUSerId)
+        
+        //если ты владелец карточки, показать иконку удаления
         if(this._cardOwnerID === this._currentUSerId) {
             this._listItem.querySelector('.place-grid__delete').classList.remove('place-grid__delete_hidden')
         }
@@ -67,11 +69,36 @@ class Card {
         // if(isLiked) { // темное сердечко}
 
         this.isCardLiked
+
+
         
         this._setEventListeners();
 
         return this._listItem;
     }
+
+    _cardLiked() {
+        let isLiked = false
+        this._likes.forEach(element => {
+            console.log("лайки", Object)
+        });
+    }
+
+        // есть ли лайк пользователя на карточке
+        // isLiked() {
+        //     let hasLike = false
+        //     // проходимся по каждому лайкнувшему карточку
+        //     this._data.likes.forEach(likedUser => {
+        //       let valuesArr = Object.values(likedUser)
+        //       // если содержит АйДи пользователя
+        //       if (valuesArr.includes(this._currentUser)) {
+        //         // значит карточка уже лайканая
+        //         hasLike = true
+        //       }
+        //     })
+        //     return hasLike;
+        //   }
+
 }
 
 export default Card;

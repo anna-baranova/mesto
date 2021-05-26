@@ -6,38 +6,57 @@ import PopupWithForm from '../components/PopupWithForm.js';
 import UserInfo from '../components/UserInfo.js';
 import PopupWithSubmit from '../components/PopupWithSubmit.js';
 import Api from '../components/Api.js';
-import {addCardForm, editProfileForm, avatarForm, openEditPopupBtn, openAddCardPopupBtn, avatarImage, nameInput, jobInput, initialCards, config} from '../utils/utils.js';
+import { addCardForm, editProfileForm, avatarForm, openEditPopupBtn, openAddCardPopupBtn, avatarImage, nameInput, jobInput, initialCards, config } from '../utils/utils.js';
 import './index.css';
-
 
 
 
 //-------ЭКЗЕМПЛЯРЫ КЛАССОВ------
 
 // экземпляр Api - 9
-const api = new Api ({
+const api = new Api({
   baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-24',
   token: 'c7246450-eb40-44a5-8abb-048e9d2f61cc'
 })
 
 //экземпляры валидации форм - 8
-const addCardValidator = new FormValidator (config, addCardForm);
-const editProfileValidator = new FormValidator (config, editProfileForm);
+const addCardValidator = new FormValidator(config, addCardForm);
+const editProfileValidator = new FormValidator(config, editProfileForm);
 const avatarFormValidator = new FormValidator(config, avatarForm);
 
+
+
+
+//меняем данные пользователя на странице - 8
+const editPopupSubmitHandler = (data) => {
+  api.changeUserData(data)
+    .then(res => {
+      userInfo.setUserInfo(res.name, res.about)
+      editPopup.close();
+    })
+    .catch(e => console.log(`Ошибка при получении данных пользователя: ${e}`))
+}
+
+//изменение аватара - 9
+function avatarPopupSubmitHandler(data) {
+  api.changeAvatar(data)
+    .then((res) => {
+      // console.log('аватар', res)
+      userInfo.setUserInfo(res.avatar)
+      avatarPopup.close();
+    })
+    .catch(e => console.log(`Ошибка при загрузке аватара: ${e}`))
+  
+}
+
 //экземпляры попапов - 8
-const addCardPopup = new PopupWithForm ('.popup_type_add-card', addCardPopupSubmitHandler);
-const editPopup = new PopupWithForm ('.popup_type_edit', editPopupSubmitHandler);
-const avatarPopup = new PopupWithForm('.popup_type_avatar', avatarPopupSubmitHandler)
+const editPopup = new PopupWithForm('.popup_type_edit', editPopupSubmitHandler);
+editPopup.setEventListeners();
 
-//экземпляр класса UserInfo - 8
-const userInfo = new UserInfo({userNameSelector: '.profile__info-title', userJobSelector: '.profile__info-subtitle', userAvatarSelector: '.profile__image'});
-userInfo.setUserInfo()
+const avatarPopup = new PopupWithForm('.popup_type_avatar', avatarPopupSubmitHandler);
+avatarPopup.setEventListeners();
 
-//экземпляр класса PopupWithSubmit - 9
-// const confirmDeleteCard = new PopupWithSubmit ('.popup_type_confirm_delete', confirmDeleteCardHandler);
-
-//создаем экземпляр класса PopupWithImage  - 8
+//экземпляр класса увеличения фото
 const popupWithImage = new PopupWithImage('.popup_type_zoom-card')
 
 
@@ -48,34 +67,6 @@ function handleCardClick(text, link) {
   popupWithImage.open(text, link);
 }
 
-//меняем данные пользователя на странице - 8
-const editPopupSubmitHandler = (data) => {
-  userInfo.setUserInfo(data['input-name'], data['input-job']);
-  api.changeUserData(data)
-  .then((data) => {
-    // console.log(data)
-  })  
-  editPopup.close();
-}
-
-//изменение аватара - 9
-function avatarPopupSubmitHandler(data) {  
-  avatarImage.src = data['input-avatar']
-  api.changeAvatar()
-    .then((res) => {
-      console.log(res)
-    })
-    .catch(e => console.log(`Ошибка при загрузке аватара: ${e}`))
-  avatarPopup.close();
-}
-
-//обработчик сабмита добавления карточки - 8
-function addCardPopupSubmitHandler(data) {
-  const newData = { text: data['input-place'], link: data['input-link']}
-  const newCard = new Card (newData, '.place-grid-template', handleCardClick);
-  cardList.addItem(newCard.getCard());
-  addCardPopup.close();
-}
 
 
 // ------МЕТОДЫ КЛАССОВ-------
@@ -87,46 +78,77 @@ avatarFormValidator.enableValidation();
 
 
 //добавляем обработчики закрытия и сабмита формам - 8
-addCardPopup.setEventListeners();
-editPopup.setEventListeners();
 popupWithImage.setEventListeners();
 avatarPopup.setEventListeners();
 
-//получаем данные пользователя с сервера - 9
-api.getUserData()
-  .then((res)=>{
-    // console.log(res)
-    const userName = document.querySelector('.profile__info-title');
-    const userJob = document.querySelector('.profile__info-subtitle');
-    const userAvatar = document.querySelector('.profile__image');
-    userName.textContent = res.name;
-    userJob.textContent = res.about;
-    userAvatar.src = res.avatar;
-  })
-  .catch(e => console.log(`Ошибка при полуении данных пользователя: ${e}`))
+//экземпляр класса UserInfo - 8
+const userInfo = new UserInfo({ 
+  userNameSelector: '.profile__info-title', 
+  userJobSelector: '.profile__info-subtitle', 
+  userAvatarSelector: '.profile__image'});
 
-//получаем карточки с сервера - 9
-api.getCards()
-  .then((res)=>{
-    console.log(res)
-    const cardList = new Section ({
-      items: res,
+
+
+function handleDeleteCardClick(card) {
+  function deleteCardHandler() {
+    api.removeCard(card.getId())
+      .then(res => {
+        confirmDeleteCard.close()
+        card.handleDeleteCard()
+      })
+  }
+
+  const confirmDeleteCard = new PopupWithForm('.popup_type_confirm_delete', deleteCardHandler);
+  confirmDeleteCard.setEventListeners()
+
+  confirmDeleteCard.open()
+}
+
+//полуаем данные пользователя и карточки с сервера
+api.getFullData()
+  .then(([userData, cardsData]) => {
+    // console.log('cardsData', userData)
+    const currentUserId = userData._id
+    userInfo.setUserInfo(userData.name, userData.about, userData.avatar)
+
+    const cardList = new Section({
+      items: cardsData,
       renderer: (item) => {
-        const card = new Card (item, '.place-grid-template', handleCardClick);
+        const card = new Card(item, '.place-grid-template', handleCardClick, currentUserId, handleDeleteCardClick);
         const cardElement = card.getCard();
         cardList.addItem(cardElement);
       }
     }, '.place-grid__list')
     cardList.renderCards();
+
+
+    //обработчик сабмита добавления карточки - 8
+    function addCardPopupSubmitHandler(data) {
+      api.createCard(data)
+        .then(res => {
+          const newCard = new Card(res, '.place-grid-template',handleCardClick, currentUserId, handleDeleteCardClick);
+          cardList.addItem(newCard.getCard());
+          addCardPopup.close();
+        })
+    }
+
+    const addCardPopup = new PopupWithForm('.popup_type_add-card', addCardPopupSubmitHandler);
+    addCardPopup.setEventListeners();
+
+    //отрытие попапа добаления карточки - 8
+    openAddCardPopupBtn.addEventListener('click', () => {
+      addCardPopup.open();
+      addCardValidator.resetValidation();
+    });
+
   })
   .catch(e => console.log(`Ошибка при полуении карточек: ${e}`))
-
 
 //--------СЛУШАТЕЛИ---------
 
 // открытие попапа профиля со значениями со страницы - 8
 openEditPopupBtn.addEventListener('click', () => {
-  editPopup.open(); 
+  editPopup.open();
   const defaultInfo = userInfo.getUserInfo();
   nameInput.value = defaultInfo.name;
   jobInput.value = defaultInfo.job;
@@ -139,8 +161,3 @@ avatarImage.addEventListener('click', () => {
   avatarFormValidator.resetValidation();
 })
 
-//отрытие попапа добаления карточки - 8
-openAddCardPopupBtn.addEventListener('click', () => {
-  addCardPopup.open();
-  addCardValidator.resetValidation();
-});

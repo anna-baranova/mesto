@@ -4,6 +4,10 @@ class Api {
         this._token = token;
     }
 
+    getFullData() {
+        return Promise.all([this.getUserData(), this.getCards()])
+    }
+
     getUserData() {
         return fetch (`${this._baseUrl}/users/me`, {
             headers: {
@@ -22,7 +26,7 @@ class Api {
         .then(result => result.ok ? result.json() : Promise.reject(result.status))
     }
 
-    changeUserData({data}) {
+    changeUserData(data) {
         return fetch (`${this._baseUrl}/users/me`, {
             method: 'PATCH',
             headers: {
@@ -30,22 +34,22 @@ class Api {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                name: '',  ////???
-                about: ''
+                name: data['input-name'],
+                about: data['input-job']
             })
         })
         .then(result => result.ok ? result.json() : Promise.reject(result.status))
     }
 
-    changeAvatar() {
-        return fetch (`${this._baseUrl}/users/me`, {
+    changeAvatar(data) {
+        return fetch (`${this._baseUrl}/users/me/avatar`, {
             method: 'PATCH',
             headers: {
                 authorization: this._token,
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                avatar: ''  ////?
+                avatar: data['input-avatar']
             })
         })
         .then(result => result.ok ? result.json() : Promise.reject(result.status))
@@ -58,16 +62,17 @@ class Api {
                 authorization: this._token,
                 'Content-Type': 'application/json'
             },
+            // data['input-place'], link: data['input-link']
             body: JSON.stringify({
-                name: '', //откуда взять данные?
-                link: ''
+                name: data['input-place'], //откуда взять данные?
+                link: data['input-link']
             })
         })
         .then(result => result.ok ? result.json() : Promise.reject(result.status))
     }
 
-    removaCard() {
-        return fetch (`${this._baseUrl}/cards/cardID`, {
+    removeCard(id) {
+        return fetch (`${this._baseUrl}/cards/${id}`, {
             method: 'DELETE',
             headers: {
                 authorization: this._token

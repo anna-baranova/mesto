@@ -71,6 +71,20 @@
         </div>
     </div>
 
+    <div class="popup popup_type_avatar">
+        <div class="popup__overlay"></div>
+        <div class="popup__container">
+            <h2 class="popup__title">Обновить аватар</h2>
+            <button type="button" class="popup__close-btn"></button>
+            <form class="form form_type_avatar" name="avatar-form" novalidate autocomplete="off">
+                <input type="url" class="form__input form__input_type_avatar" id="avatar-url" name="input-avatar" 
+                placeholder="Ссылка на аватарку" required>
+                <span class="form__input-error" id="avatar-url-error"></span>
+                <button type="submit" class="form__save-btn">Сохранить</button>
+            </form>   
+        </div>
+    </div>
+
     <div class="popup popup_type_zoom-card">
         <div class="popup__overlay"></div>
         <figure class="popup__zoom">
@@ -85,23 +99,13 @@
         <div class="popup__container">
             <h2 class="popup__title">Вы уверены?</h2>
             <button type="button" class="popup__close-btn"></button>
+            <form class="form">
             <button type="submit" class="form__save-btn">Да</button>   
+            </form>
         </div>
     </div>
 
-    <div class="popup popup_type_avatar">
-        <div class="popup__overlay"></div>
-        <div class="popup__container">
-            <h2 class="popup__title">Обновить аватар</h2>
-            <button type="button" class="popup__close-btn"></button>
-            <form class="form form_type_avatar" name="avatar-form" novalidate autocomplete="off">
-                <input type="url" class="form__input form__input_type_avatar" id="avatar-url" name="input-avatar" 
-                placeholder="Ссылка на картинку" required>
-                <span class="form__input-error" id="avatar-url-error"></span>
-                <button type="submit" class="form__save-btn">Сохранить</button>
-            </form>   
-        </div>
-    </div>
+
 
 
     <template class="place-grid-template">

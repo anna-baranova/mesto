@@ -20,9 +20,12 @@
 @import url(../blocks/place-grid/__list/place-grid__list.css);
 @import url(../blocks/place-grid/__list-item/place-grid__list-item.css);
 @import url(../blocks/place-grid/__delete/place-grid__delete.css);
+@import url(../blocks/place-grid/__delete/_hidden/place-grid__delete_hidden.css);
 @import url(../blocks/place-grid/__title-container/place-grid__title-container.css);
 @import url(../blocks/place-grid/__title/place-grid__title.css);
 @import url(../blocks/place-grid/__like/place-grid__like.css);
+@import url(../blocks/place-grid/__like-btn/place-grid__like-btn.css);
+@import url(../blocks/place-grid/__like-count/place-grid__like-count.css);
 @import url(../blocks/place-grid/__like/_liked/place-grid__like-liked.css);
 
 @import url(../blocks/footer/footer.css);

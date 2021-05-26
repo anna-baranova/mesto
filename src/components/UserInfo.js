@@ -15,6 +15,7 @@ class UserInfo {
         this._userName.textContent = name
         this._userJob.textContent = job
     }
+    
 }
 
 export default UserInfo;

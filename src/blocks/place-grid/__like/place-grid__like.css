@@ -1,16 +1,10 @@
 .place-grid__like{
-    background: none;
-    background-image: url(../../../images/place-grid__like.svg);
-    background-position: center;
-    width: 22px;
-    height: 19px;
-    border: none;
-    outline: none;
     padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-.place-grid__like:hover{
-    opacity: 0.5;
-    cursor: pointer;
-}
+
 

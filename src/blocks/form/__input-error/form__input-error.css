@@ -1,6 +1,6 @@
 .form__input-error{
     position: absolute;
-    top: 150px;
+    top: 196px;
     left: 36px;
     max-width: 358px;
     font-style: normal;
@@ -13,17 +13,17 @@
     text-overflow: ellipsis;
 }
 
-.form__input-error:last-of-type{
-    top: 207px;
+.form__input-error:first-of-type{
+    top: 138px;
 }
 
 @media screen and (max-width: 639px) {
     .form__input-error{
         max-width: 238px;
-        top: 154px;
+        top: 186px;
         left: 22px;
     }
-    .form__input-error:last-of-type{
-        top: 211px;
+    .form__input-error:first-of-type{
+        top: 128px;
     }
 }

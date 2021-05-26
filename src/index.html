@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="stylesheet" href="./pages/index.css"> -->
 
     <title>Mesto</title>
 </head>
@@ -14,11 +15,12 @@
 
         <main>
             <section class="profile">
-                <img class="profile__image" src="<%=require('./images/profile__image.jpg')%>" alt="Жак-Ив Кусто">
+                <!-- <img class="profile__image" src="<%=require('./images/profile__image.jpg')%>" alt="Жак-Ив Кусто"> -->
+                <img class="profile__image" src=" " alt="Жак-Ив Кусто">
                 <div class="profile__info">
-                    <h1 class="profile__info-title">Жак-Ив Кусто</h1>
+                    <h1 class="profile__info-title"></h1>
                     <button type="button" class="profile__edit-button"></button>
-                    <p class="profile__info-subtitle">Исследователь океана</p>
+                    <p class="profile__info-subtitle"></p>
                 </div>
                 <button type="button" class="profile__add-button"></button>
             </section>
@@ -77,16 +79,45 @@
             <figcaption class="popup__caption"></figcaption>
         </figure>
     </div>
+
+    <div class="popup popup_type_confirm_delete">
+        <div class="popup__overlay"></div>
+        <div class="popup__container">
+            <h2 class="popup__title">Вы уверены?</h2>
+            <button type="button" class="popup__close-btn"></button>
+            <button type="submit" class="form__save-btn">Да</button>   
+        </div>
+    </div>
+
+    <div class="popup popup_type_avatar">
+        <div class="popup__overlay"></div>
+        <div class="popup__container">
+            <h2 class="popup__title">Обновить аватар</h2>
+            <button type="button" class="popup__close-btn"></button>
+            <form class="form form_type_avatar" name="avatar-form" novalidate autocomplete="off">
+                <input type="url" class="form__input form__input_type_avatar" id="avatar-url" name="input-avatar" 
+                placeholder="Ссылка на картинку" required>
+                <span class="form__input-error" id="avatar-url-error"></span>
+                <button type="submit" class="form__save-btn">Сохранить</button>
+            </form>   
+        </div>
+    </div>
+
+
     <template class="place-grid-template">
         <li class="place-grid__list-item">
             <img class="place-grid__item"  src="<%=require('./images/place__cherkessia.jpg')%>" alt="Карачаево-Черкессия">
-            <button type="button" class="place-grid__delete"></button>
+            <!-- <img class="place-grid__item"  src="./images/place__cherkessia.jpg" alt="Карачаево-Черкессия"> -->
+            <button type="button" class="place-grid__delete place-grid__delete_hidden"></button>
             <div class="place-grid__title-container">
                 <h2 class="place-grid__title"></h2>
-                <button type="button" class="place-grid__like"></button>
+                <div class="place-grid__like">
+                    <button type="button" class="place-grid__like-btn"></button>
+                    <span class="place-grid__like-count">0</span>
+                </div>
             </div>    
         </li>
     </template>
-
+    <!-- <script type="module" src="./pages/index.js"></script> -->
 </body>
 </html>

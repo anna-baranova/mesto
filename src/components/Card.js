@@ -1,6 +1,6 @@
 class Card {
-    constructor({text, link}, cardTemplateSelector, handleCardClick) {
-        this._text = text;
+    constructor({name, link}, cardTemplateSelector, handleCardClick) {
+        this._text = name;
         this._link = link;
         this._cardTemplateSelector = cardTemplateSelector;
         this._handleCardClick = handleCardClick;
@@ -16,7 +16,7 @@ class Card {
     }
 
     _setEventListeners() {
-        const likeButton = this._listItem.querySelector('.place-grid__like');
+        const likeButton = this._listItem.querySelector('.place-grid__like-btn');
         const delButton = this._listItem.querySelector('.place-grid__delete');
         const listItemPhoto = this._listItem.querySelector('.place-grid__item');
 

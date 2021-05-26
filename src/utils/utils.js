@@ -1,10 +1,12 @@
 //формы добавления карточки и редактирования профиля
 export const addCardForm = document.querySelector('.form_type_add-card');
 export const editProfileForm = document.querySelector('.form_type_edit');
+export const avatarForm = document.querySelector('.form_type_avatar')
 
 //кнопки открытия
 export const openEditPopupBtn = document.querySelector('.profile__edit-button');
 export const openAddCardPopupBtn = document.querySelector('.profile__add-button');
+export const avatarImage = document.querySelector('.profile__image')
 
 //инпуты формы редактирования
 export const nameInput = document.querySelector('.form__input_type_name');
@@ -44,5 +46,6 @@ export const config = {
   submitButtonSelector: '.form__save-btn',
   inactiveButtonClass: 'form__save-btn_disabled',
   inputErrorClass: 'form__input_type_error',
-  errorClass: 'form__input-error_visible'
+  errorClass: 'form__input-error_visible',
+
 }

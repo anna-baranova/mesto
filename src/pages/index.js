@@ -52,7 +52,7 @@ function isLoading (loading, popup) {
     if (popup.classList.contains('popup_type_add-card')) {
       popup.querySelector('.form__save-btn').textContent = "Cоздать"
     } 
-    else if (popup.classList.contains('popup_type_confirm_delete')) {
+    else if (popup.classList.contains('popup_type_confirm-delete')) {
       popup.querySelector('.form__save-btn').textContent = "Да"
     }
     else {
@@ -103,7 +103,7 @@ function handleDeleteCardClick(card) {
         isLoading(false, confirmDeletePopup)
       })
   }
-  const confirmDeleteCard = new PopupWithForm('.popup_type_confirm_delete', deleteCardHandler);
+  const confirmDeleteCard = new PopupWithForm('.popup_type_confirm-delete', deleteCardHandler);
   confirmDeleteCard.setEventListeners()
   confirmDeleteCard.open()
 }

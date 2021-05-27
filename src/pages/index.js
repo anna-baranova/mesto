@@ -3,6 +3,7 @@ import Card from '../components/Card.js';
 import Section from '../components/Section.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
+import PopupWithConfirm from '../components/PopupWithConfirm.js'
 import UserInfo from '../components/UserInfo.js';
 import Api from '../components/Api.js';
 import {addCardFormPopup, editProfileFormPopup, avatarFormPopup, confirmDeletePopup, addCardForm, editProfileForm, avatarForm, openEditPopupBtn, openAddCardPopupBtn, avatarImage, nameInput, jobInput, config} from '../utils/utils.js';
@@ -26,6 +27,7 @@ const avatarFormValidator = new FormValidator(config, avatarForm);
 //экземпляры попапов - 8
 const editPopup = new PopupWithForm('.popup_type_edit', editPopupSubmitHandler);
 const avatarPopup = new PopupWithForm('.popup_type_avatar', avatarPopupSubmitHandler);
+const confirmDeleteCard = new PopupWithConfirm('.popup_type_confirm-delete');
 
 //экземпляр класса увеличения фото
 const popupWithImage = new PopupWithImage('.popup_type_zoom-card')
@@ -103,8 +105,7 @@ function handleDeleteCardClick(card) {
         isLoading(false, confirmDeletePopup)
       })
   }
-  const confirmDeleteCard = new PopupWithForm('.popup_type_confirm-delete', deleteCardHandler);
-  confirmDeleteCard.setEventListeners()
+  confirmDeleteCard.setNewSubmitHandler(deleteCardHandler)
   confirmDeleteCard.open()
 }
 
@@ -137,7 +138,7 @@ avatarFormValidator.enableValidation();
 popupWithImage.setEventListeners();
 avatarPopup.setEventListeners();
 editPopup.setEventListeners();
-avatarPopup.setEventListeners();
+confirmDeleteCard.setEventListeners()
 
 //получение начальных данных пользователя и карточек с сервера
 api.getFullData()

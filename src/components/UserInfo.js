@@ -9,9 +9,7 @@ class UserInfo {
         return {
             name: this._userName.textContent,
             job: this._userJob.textContent,
-            avatar: this._userAvatar.src,
-            
-            
+            avatar: this._userAvatar.src,     
         }
     }
 

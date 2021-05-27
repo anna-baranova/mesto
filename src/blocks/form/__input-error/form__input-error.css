@@ -1,6 +1,6 @@
 .form__input-error{
     position: absolute;
-    top: 196px;
+    top: 202px;
     left: 36px;
     max-width: 358px;
     font-style: normal;
@@ -14,8 +14,19 @@
 }
 
 .form__input-error:first-of-type{
-    top: 138px;
+    top: 146px;
 }
+@media screen and (max-width: 879px) {
+    .form__input-error{
+        max-width: 358px;
+        top: 196px;
+        left: 36px;
+    }
+    .form__input-error:first-of-type{
+        top: 140px;
+    }
+}
+
 
 @media screen and (max-width: 639px) {
     .form__input-error{

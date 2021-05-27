@@ -1,3 +1,9 @@
+//попапы
+export const addCardFormPopup = document.querySelector('.popup_type_add-card');
+export const editProfileFormPopup = document.querySelector('.popup_type_edit');
+export const avatarFormPopup = document.querySelector('.popup_type_avatar')
+export const confirmDeletePopup = document.querySelector('.popup_type_confirm_delete')
+
 //формы добавления карточки и редактирования профиля
 export const addCardForm = document.querySelector('.form_type_add-card');
 export const editProfileForm = document.querySelector('.form_type_edit');

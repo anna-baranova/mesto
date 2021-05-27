@@ -1,6 +1,5 @@
 class Card {
-    constructor({name, link, owner, _id, likes}, cardTemplateSelector, handleCardClick, currentUSerId, handleDeleteCardClick) {
-        // console.log('owner', owner)
+    constructor({name, link, owner, _id, likes}, cardTemplateSelector, handleCardClick, currentUSerId, handleDeleteCardClick, handleLikeIconClick) {
         this._text = name;
         this._link = link;
         this._cardTemplateSelector = cardTemplateSelector;
@@ -8,14 +7,25 @@ class Card {
         this._cardOwnerID = owner._id
         this._currentUSerId = currentUSerId
         this._cardId = _id
-        this._likes =  likes
+        this._likes = likes
         this._handleDeleteCardClick = handleDeleteCardClick
+        this._handleLikeIconClick = handleLikeIconClick
+    }
 
-        // console.log('this._cardOwnerID', this._cardOwnerID)
-        // console.log('this._currentUSerId', this._currentUSerId)
-        // cardOwnderID - 
-        // currentUSerId - твой id
-       // console.log('this._likes', this._likes)
+    setLikes(newCardInfo) {
+        if(newCardInfo) {
+            this._likes = newCardInfo.likes
+        }
+        const likesCount = this._likes.length
+        this._listItem.querySelector('.place-grid__like-count').textContent = likesCount
+
+        //проверяем есть ли твой лайк на карточке
+        this.isLiked = this._likes.find(person => person._id === this._currentUSerId)
+            if(this.isLiked) {
+                 this._likeIcon.classList.add('place-grid__like-liked')
+          } else {
+            this._likeIcon.classList.remove('place-grid__like-liked') 
+          }
     }
 
     getId() {
@@ -37,8 +47,7 @@ class Card {
         const listItemPhoto = this._listItem.querySelector('.place-grid__item');
 
         delButton.addEventListener('click', () => this._handleDeleteCardClick(this));
-        likeButton.addEventListener('click', this._handleLikeButton);
-
+        likeButton.addEventListener('click', () => this._handleLikeIconClick(this));
         listItemPhoto.addEventListener('click', () => {
             this._handleCardClick(this._text, this._link)
           });
@@ -50,55 +59,23 @@ class Card {
         this._listItem = listItemTemplate.cloneNode(true);
         const listItemTitle = this._listItem.querySelector('.place-grid__title');
         const listItemPhoto = this._listItem.querySelector('.place-grid__item');
+        this._likeIcon = this._listItem.querySelector('.place-grid__like-btn');
 
         listItemTitle.textContent = this._text;
         listItemPhoto.src = this._link;
         listItemPhoto.alt = this._text;
 
-        
-        // this._cardOwnerID = owner._id
-        // this._currentUSerId = currentUSerId
-        // console.log(this._cardOwnerID === this._currentUSerId)
-        
+        this.setLikes()
+
         //если ты владелец карточки, показать иконку удаления
         if(this._cardOwnerID === this._currentUSerId) {
             this._listItem.querySelector('.place-grid__delete').classList.remove('place-grid__delete_hidden')
         }
-
-        // this.isLiked = this._likes.find(person => person._id === this._currentUSerId) // true null
-        // if(isLiked) { // темное сердечко}
-
-        this.isCardLiked
-
-
         
         this._setEventListeners();
 
         return this._listItem;
     }
-
-    _cardLiked() {
-        let isLiked = false
-        this._likes.forEach(element => {
-            console.log("лайки", Object)
-        });
-    }
-
-        // есть ли лайк пользователя на карточке
-        // isLiked() {
-        //     let hasLike = false
-        //     // проходимся по каждому лайкнувшему карточку
-        //     this._data.likes.forEach(likedUser => {
-        //       let valuesArr = Object.values(likedUser)
-        //       // если содержит АйДи пользователя
-        //       if (valuesArr.includes(this._currentUser)) {
-        //         // значит карточка уже лайканая
-        //         hasLike = true
-        //       }
-        //     })
-        //     return hasLike;
-        //   }
-
 }
 
 export default Card;

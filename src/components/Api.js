@@ -62,9 +62,8 @@ class Api {
                 authorization: this._token,
                 'Content-Type': 'application/json'
             },
-            // data['input-place'], link: data['input-link']
             body: JSON.stringify({
-                name: data['input-place'], //откуда взять данные?
+                name: data['input-place'],
                 link: data['input-link']
             })
         })
@@ -81,8 +80,8 @@ class Api {
         .then(result => result.ok ? result.json() : Promise.reject(result.status))
     }
 
-    likeCard() {
-        return fetch (`${this._baseUrl}/cards/likes/cardID`, {
+    likeCard(id) {
+        return fetch (`${this._baseUrl}/cards/likes/${id}`, {
             method: 'PUT',
             headers: {
                 authorization: this._token
@@ -91,8 +90,8 @@ class Api {
         .then(result => result.ok ? result.json() : Promise.reject(result.status))
     }
 
-    unlikeCard() {
-        return fetch (`${this._baseUrl}/cards/likes/cardID`, {
+    unlikeCard(id) {
+        return fetch (`${this._baseUrl}/cards/likes/${id}`, {
             method: 'DELETE',
             headers: {
                 authorization: this._token
@@ -100,10 +99,6 @@ class Api {
         })
         .then(result => result.ok ? result.json() : Promise.reject(result.status))
     }
-
-
-   
-
     
 }
 

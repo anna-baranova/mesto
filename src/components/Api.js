@@ -14,7 +14,7 @@ class Api {
                 authorization: this._token
             }
         })
-        .then(result => result.ok ? result.json() : Promise.reject(result.status))
+        .then(res => this._getResponseData(res))
     }    
 
     getCards() {
@@ -23,7 +23,7 @@ class Api {
                 authorization: this._token
             }
         })
-        .then(result => result.ok ? result.json() : Promise.reject(result.status))
+        .then(res => this._getResponseData(res))
     }
 
     changeUserData(data) {
@@ -38,7 +38,7 @@ class Api {
                 about: data['input-job']
             })
         })
-        .then(result => result.ok ? result.json() : Promise.reject(result.status))
+        .then(res => this._getResponseData(res))
     }
 
     changeAvatar(data) {
@@ -52,7 +52,7 @@ class Api {
                 avatar: data['input-avatar']
             })
         })
-        .then(result => result.ok ? result.json() : Promise.reject(result.status))
+        .then(res => this._getResponseData(res))
     }
 
     createCard(data) {
@@ -67,7 +67,7 @@ class Api {
                 link: data['input-link']
             })
         })
-        .then(result => result.ok ? result.json() : Promise.reject(result.status))
+        .then(res => this._getResponseData(res))
     }
 
     removeCard(id) {
@@ -77,7 +77,7 @@ class Api {
                 authorization: this._token
             }
         })
-        .then(result => result.ok ? result.json() : Promise.reject(result.status))
+        .then(res => this._getResponseData(res))
     }
 
     likeCard(id) {
@@ -87,7 +87,7 @@ class Api {
                 authorization: this._token
             }
         })
-        .then(result => result.ok ? result.json() : Promise.reject(result.status))
+        .then(res => this._getResponseData(res))
     }
 
     unlikeCard(id) {
@@ -97,8 +97,15 @@ class Api {
                 authorization: this._token
             }
         })
-        .then(result => result.ok ? result.json() : Promise.reject(result.status))
+        .then(res => this._getResponseData(res))
     }
+
+    _getResponseData(res) {
+        if (!res.ok) {
+            return Promise.reject(`${res.status}`); 
+        }
+        return res.json();
+      }
     
 }
 

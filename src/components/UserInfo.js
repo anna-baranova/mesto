@@ -13,13 +13,17 @@ class UserInfo {
         }
     }
 
-    setUserInfo(name, job, avatar) {
+    setUserInfo(name, job, avatar, id) {
         this._userName.textContent = name
         this._userJob.textContent = job
         this._userAvatar.src = avatar
+        this._id = id
         //  console.log(this._userAvatar)
+    }    
+
+    getUserId() {
+        return this._id
     }
-    
 }
 
 export default UserInfo;

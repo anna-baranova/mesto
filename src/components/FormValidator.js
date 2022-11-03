@@ -59,7 +59,7 @@ class FormValidator {
             })
         })
     }
-    //попробуем очистить форму
+    
     resetValidation() {
         this._inputList.forEach((inputElement) => {
           this._hideInputError(inputElement);

@@ -24,7 +24,7 @@ import {addCardFormPopup,
 
 //-------ЭКЗЕМПЛЯРЫ КЛАССОВ------
 
-// экземпляр Api - 9
+// экземпляр Api
 const api = new Api({
   baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-24',
   token: 'c7246450-eb40-44a5-8abb-048e9d2f61cc'

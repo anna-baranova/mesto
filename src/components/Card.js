@@ -19,7 +19,6 @@ class Card {
         const likesCount = this._likes.length
         this._listItem.querySelector('.place-grid__like-count').textContent = likesCount
 
-        //проверяем есть ли твой лайк на карточке
         this.isLiked = this._likes.find(person => person._id === this._currentUSerId)
             if(this.isLiked) {
                  this._likeIcon.classList.add('place-grid__like-liked')
@@ -67,7 +66,6 @@ class Card {
 
         this.setLikes()
 
-        //если ты владелец карточки, показать иконку удаления
         if(this._cardOwnerID === this._currentUSerId) {
             this._listItem.querySelector('.place-grid__delete').classList.remove('place-grid__delete_hidden')
         }

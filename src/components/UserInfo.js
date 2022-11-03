@@ -18,7 +18,6 @@ class UserInfo {
         this._userJob.textContent = job
         this._userAvatar.src = avatar
         this._id = id
-        //  console.log(this._userAvatar)
     }    
 
     getUserId() {
